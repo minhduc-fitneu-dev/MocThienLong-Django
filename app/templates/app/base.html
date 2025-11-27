@@ -1,0 +1,349 @@
+{% load static %}
+ <!--chắc chắn rằng django.template.context_processors.static đã được thêm vào TEMPLATES trong settings.py.-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+    <link href="{% static 'app/css/owl.carousel.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!--JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="{% static 'app/js/all.min.js' %}"></script>
+    <script src="{% static 'app/js/s3.js' %}"></script>
+    <script src="{% static 'app/js/myscript.js' %}"></script>
+
+
+  
+
+    <script type="text/javascript">
+        var user = '{{ request.user }}';
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+    </script>
+        
+    <title>WEB BÁN HÀNG ONLINE</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type = "text/css" href="{% static "app/css/main.css" %}">
+</head>
+<body>
+    <!--HEADER-->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm py-2">
+        <div class="container-fluid">
+      
+          <!-- Logo -->
+          <!-- Nhúng font -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Noto+Serif&display=swap" rel="stylesheet">
+
+<a class="navbar-brand d-flex align-items-center gap-3 text-decoration-none" href="{% url 'home' %}">
+  <img src="{% static 'app/images/logomoc.jpg' %}" alt="Logo" width="100">
+
+  <div class="d-flex flex-column">
+    <span style="font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #4e342e; letter-spacing: 1px;">
+      MỘC THIÊN LONG
+    </span>
+    <small style="font-family: 'Noto Serif', serif; font-size: 0.9rem; color: #8d6e63; font-style: italic;">
+      Gửi giá trị, nhận tin yêu
+    </small>
+  </div>
+</a>
+
+          <!-- Nút mobile (toggler mở menu mobile) -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <!-- Navbar nội dung -->
+          <div class="collapse navbar-collapse" id="mainNavbar">
+            <!-- Menu điều hướng trái (Desktop) -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Trang chủ</a>
+              </li>
+              <!--Danh mục sản phẩm-->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                  Sản phẩm
+                </a>
+                <ul class="dropdown-menu">
+                  {% for i in categories  %}
+                  <li><a class="dropdown-item" href="{% url 'category'%}?category={{i.slug}}">{{i.name}}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}">Về chúng tôi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'contact' %}">Liên hệ</a>
+            </ul>
+      
+            <!-- Tìm kiếm -->
+            <form class="d-flex me-3" role="search" method= POST action="{% url 'search' %}" >
+              {% csrf_token %}
+              <input class="form-control me-2" type="search" placeholder="Tìm sản phẩm..." aria-label="Search" name="searched">
+              <button class="btn btn-outline-warning" type="submit">Search</button>
+            </form>
+            <br> 
+      
+            <!-- Giỏ hàng & tài khoản -->
+            <div class="d-flex align-items-center gap-3">
+              <a class="nav-link cart-btn position-relative" href="{% url 'cart' %}">
+                <i class="fas fa-shopping-cart"></i> GIỎ HÀNG
+                <span class="badge cart-badge position-absolute top-0 start-100 translate-middle" id="cart-count">
+                    {{ cartItems }}
+                </span>
+
+            </a>           
+     
+              {% if request.user.is_authenticated %}
+                <div class="dropdown">
+                  <a class="dropdown-toggle fw-semibold text-dark" href="#" data-bs-toggle="dropdown">{{ request.user.username|title }}</a>
+                  <ul class="dropdown-menu dropdown-menu-end shadow account-menu animate__animated animate__fadeIn">
+                    <li>
+                      <a class="dropdown-item d-flex align-items-center gap-2" href={% url 'myaccount' %}>
+                        <i class="fas fa-user-circle"></i> Trang cá nhân
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item d-flex align-items-center gap-2" href="{% url 'order_history' %}">
+                        <i class="fas fa-box-open"></i> Đơn hàng
+                      </a>
+                    </li>
+                    <li>
+                      <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="dropdown-item d-flex align-items-center gap-2 text-danger" style="background: none; border: none;">
+                          <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                        </button>
+                      </form>
+                    </li>
+                  </ul>                  
+                </div>
+              {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm">Đăng nhập</a>
+                <a href="{% url 'register' %}" class="btn btn-primary btn-sm">Đăng ký</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </nav>      
+
+      <style>
+        .cart-btn {
+          background-color: #ffc107;
+          color: white;
+          font-weight: bold;
+          padding: 8px 15px;
+          border-radius: 20px;
+          transition: 0.3s ease-in-out;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+      
+        .cart-btn:hover {
+          background-color: #ffca28;
+          transform: scale(1.05);
+        }
+      
+        .cart-badge {
+          background-color: red;
+          color: white;
+          font-size: 12px;
+          padding: 4px 8px;
+          border-radius: 50%;
+          font-weight: bold;
+        }
+      
+        .dropdown-menu .dropdown-item:hover {
+          background-color: #f8f9fa;
+          color: #0d6efd;
+        }
+      </style>
+    <!--style giỏ hàng-->   
+    <style> 
+    .account-menu {
+        min-width: 200px;
+        padding: 10px 0;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        animation-duration: 0.3s;
+      }
+      
+      .account-menu .dropdown-item {
+        transition: all 0.2s ease-in-out;
+        font-size: 15px;
+        padding: 10px 15px;
+      }
+      
+      .account-menu .dropdown-item:hover {
+        background-color: #f1f1f1;
+        color: #0d6efd;
+      }
+      
+      .account-menu i {
+        font-size: 16px;
+      }
+    </style>
+          
+
+    <!--Main BODY-->
+    {% block banner_slider %}{% endblock banner_slider %}
+    {%  block main_content %}{% endblock main_content %}
+    {%  block cart_content %}{% endblock cart_content %}
+    {%  block content_checkout %}{% endblock content_checkout %}
+    {% block register  %} {% endblock register %}
+    {% block login  %} {% endblock login %}
+    {% block search  %} {% endblock search %}
+    {% block category  %} {% endblock category %}
+    {% block detail  %} {% endblock detail %}
+    {% block about  %} {% endblock about %}
+    {% block myaccount %} {% endblock myaccount %}
+    {% block contact  %} {% endblock contact %}
+    {% block order_confirmation %} {% endblock order_confirmation %}
+    {% block order_history %} {% endblock order_history %}
+
+
+
+
+
+    
+
+
+
+
+   
+
+        <!--FOOTER-->
+        <footer class="footer">
+          <div class="container">
+              <div class="row">
+                  <!-- About Us Section -->
+                  <div class="col-lg-4 col-md-6 mb-4">
+                      <h1>Về Chúng Tôi</h1>
+                      <p>Mộc Thiên Long cung cấp các sản phẩm mỹ nghệ gỗ thủ công tinh tế, kết hợp giữa nghệ thuật truyền thống và hiện đại, mang lại giá trị văn hóa sâu sắc cho không gian sống của bạn.</p>
+                      <div class="social-links">
+                          <a href="https://www.facebook.com/DOGO.MOCTHIENLONG/" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                          <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                          <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                      </div>
+                  </div>
+      
+                  <!-- Quick Links Section -->
+                  <div class="col-lg-2 col-md-6 mb-4">
+                      <h5 class="mb-4">LIÊN KẾT NHANH</h5>
+                      <ul class="list-unstyled">
+                          <li class="mb-2"><a href="{% url 'home' %}" class="footer-link">Trang Chủ</a></li>
+                          <li class="mb-2"><a href="{% url 'about' %}"class="footer-link">Về Chúng Tôi</a></li>
+                          <li class="mb-2"><a href="{% url 'category' %}" class="footer-link">Sản Phẩm</a></li>
+                          <li class="mb-2"><a href="{% url 'contact' %}" class="footer-link">Liên Hệ</a></li>
+                      </ul>
+                  </div>
+      
+                  <!-- Contact Info Section -->
+                  <div class="col-lg-4 col-md-6 mb-4">
+                      <h5 class="mb-4">THÔNG TIN LIÊN HỆ</h5>  
+                      <ul class="list-unstyled">
+                          <li class="mb-3"><i class="fas fa-map-marker-alt me-2"></i> <a href="https://maps.app.goo.gl/MgTx4WbWktdJy7rA7" class="footer-link">Làng nghề Chuyên Mỹ, Phú Xuyên, Hà Nội</a></li>
+                          <li class="mb-3"><i class="fas fa-phone me-2"></i> <a href="tel:+84972892105" class="footer-link">0972892105</a></li>
+                          <li class="mb-3"><i class="fas fa-envelope me-2"></i> <a href="mailto:mocthienlong@gmail.com" class="footer-link">mocthienlong@gmail.com</a></li>
+                      </ul>
+                  </div>
+              </div>
+      
+              <!-- Copyright Section -->
+              <div class="row mt-5">
+                  <div class="col-12">
+                      <hr class="mb-4">
+                      <div class="text-center">
+                          <p class="mb-0">&copy; 2024 Mộc Thiên Long. All rights reserved.</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </footer>
+      <style>
+        /* Đặt font chữ cho footer */
+        .footer {
+            font-family: 'Roboto', sans-serif; /* Sử dụng font Roboto cho văn bản footer */
+            background-color: #FFF8E1; /* Màu nền vàng nhạt */
+            color: #4E342E;  /* Màu nâu cho chữ */
+            padding: 50px 0;
+        }
+        
+        /* Tiêu đề footer sử dụng font Playfair Display */
+        .footer h1 {
+            font-family: 'Playfair Display', serif; /* Sử dụng font Playfair Display cho tiêu đề */
+            font-size: 36px;
+            font-weight: bold;
+            color: #FF9800;  /* Màu cam sáng cho tiêu đề */
+            margin-bottom: 20px;
+        }
+        
+        /* Liên kết trong footer */
+        .footer .footer-link {
+            color: #4E342E;  /* Màu nâu cho liên kết */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer .footer-link:hover {
+            color: #FF9800;  /* Màu cam sáng khi hover */
+        }
+        
+        /* Các biểu tượng xã hội */
+        .footer .social-icon {
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            border-radius: 30%;
+            text-align: center;
+            color: #fff;
+            background-color:rgb(226, 184, 119);  /* Màu cam sáng cho icon */
+            margin: 0 3px;
+            transition: all 0.3s ease;
+            font-size: 24px;
+        }
+        
+        .footer .social-icon:hover {
+            transform: translateY(-3px);
+            background-color: #FF5722;  /* Màu cam đậm khi hover */
+        }
+        
+        /* Phần văn bản trong footer */
+        .footer p {
+            color: #4E342E;  /* Màu nâu cho phần văn bản */
+            font-family: 'Roboto', sans-serif; /* Font chữ Roboto cho văn bản footer */
+        }
+        
+      </style>
+      
+ <script src="{% static 'app/js/cart.js' %}"></script> 
+
+</body>
+
+
+</html>

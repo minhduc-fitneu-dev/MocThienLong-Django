@@ -1,0 +1,126 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block order_confirmation %}
+<!-- Container -->
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-12">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <h1 class="display-4 fw-bold text-success animated fadeIn">Đơn hàng đã được xác nhận!</h1>
+                <p class="lead text-muted animated fadeIn delay-1s">Cảm ơn bạn đã đặt hàng. Dưới đây là thông tin đơn hàng của bạn.</p>
+            </div>
+
+            <!-- Order Details Card -->
+            <div class="card shadow-lg border-light rounded-3">
+                <div class="card-body">
+                    <!-- Title -->
+                    <h3 class="card-title mb-4 text-center text-uppercase fw-bold">Thông tin đơn hàng</h3>
+
+                    <!-- Order Information -->
+                    <div class="card shadow-sm border-light">
+                        <div class="card-body">
+                            <div class="row justify-content-center">
+                                <!-- Order ID and Total Amount in the same row -->
+                                <div class="col-md-6 mb-3 text-center">
+                                    <h5><strong>Đơn hàng số:</strong></h5>
+                                    <p class="text-muted">{{ order.id }}</p>
+                                </div>
+                                <div class="col-md-6 mb-3 text-center">
+                                    <h5><strong>Tổng tiền:</strong></h5>
+                                    <p class="text-muted">{{ order.get_cart_total|floatformat:0|intcomma }}₫</p>
+                                </div>
+                            </div>
+                    <!-- Action Buttons -->
+                    <div class="text-center mt-4">
+                        <a href="{% url 'home' %}" class="btn btn-lg btn-success rounded-pill animated fadeIn delay-2s">Tiếp tục mua sắm</a>
+                        <a href="{% url 'cart' %}" class="btn btn-lg btn-outline-dark rounded-pill animated fadeIn delay-3s">Quay lại giỏ hàng</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Additional Styles for Animation -->
+<style>
+    .animated {
+        animation-duration: 1s;
+        animation-fill-mode: both;
+    }
+
+    .fadeIn {
+        animation-name: fadeIn;
+    }
+
+    .delay-1s {
+        animation-delay: 1s;
+    }
+
+    .delay-2s {
+        animation-delay: 2s;
+    }
+
+    .delay-3s {
+        animation-delay: 3s;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .card {
+        border-radius: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+    }
+
+    .btn {
+        padding: 12px 30px;
+        font-size: 18px;
+        font-weight: bold;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-outline-dark {
+        border: 2px solid #333;
+    }
+    .row.justify-content-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .card-body {
+        padding: 2rem;
+    }
+    .btn-lg {
+        padding: 12px 40px;
+        font-size: 18px;
+    }
+    .btn-primary {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        
+</style>
+
+{% endblock order_confirmation %}

@@ -1,0 +1,118 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block about %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row gx-4 align-items-center justify-content-between">
+            <div class="col-md-5 order-2 order-md-1">
+                <div class="mt-5 mt-md-0">
+                    <span class="text-muted">Về chúng tôi</span>
+                    <!-- Tiêu đề với màu chữ nâu -->
+                    <h2 class="display-5 custom-font fw-bold">MỘC THIÊN LONG</h2>
+                    
+                    <p class="lead text-muted">
+                        Mộc Thiên Long là thương hiệu chuyên cung cấp các dòng sản phẩm mỹ nghệ gỗ thủ công cao cấp, kết tinh giữa nghệ thuật truyền thống và hơi thở hiện đại. Chúng tôi tự hào mang đến những tác phẩm gỗ không chỉ đẹp mắt mà còn mang đậm giá trị văn hóa – tâm linh – phong thủy.
+                    </p>
+                    <p class="lead text-muted">
+                        Từ tranh gỗ, đồng hồ gỗ, khay trà, đĩa trang trí đến đồ gỗ tiện ích, quà tặng thủ công, mỗi sản phẩm tại <strong>Mộc Thiên Long</strong> đều được chế tác tỉ mỉ bởi bàn tay của những người thợ lành nghề, tận tâm trong từng đường chạm khắc.
+                    </p>
+                
+                    <p class="lead text-muted">
+                        Tại <strong>Mộc Thiên Long</strong>, chúng tôi tin rằng mỗi sản phẩm là một tác phẩm nghệ thuật có hồn, góp phần gìn giữ vẻ đẹp truyền thống trong không gian sống hiện đại. Chúng tôi luôn cam kết mang đến sản phẩm chất lượng và uy tín hàng đầu.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6 offset-md-1 order-1 order-md-2">
+                <div class="row gx-2 gx-lg-3">
+                    <!-- Image Gallery -->
+                    <div class="col-6">
+                        <div class="mb-2">
+                            <img class="img-fluid rounded-3 shadow" src="{% static 'app/images/aboutus/intro1.jpg' %}" alt="Image 1">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-2">
+                            <img class="img-fluid rounded-3 shadow" src="{% static 'app/images/aboutus/intro2.jpg' %}" alt="Image 2">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-2">
+                            <img class="img-fluid rounded-3 shadow" src="{% static 'app/images/aboutus/intro3.jpg' %}" alt="Image 3">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mb-2">
+                            <img class="img-fluid rounded-3 shadow" src="{% static 'app/images/aboutus/intro4.jpg' %}" alt="Image 4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Tiêu đề MỘC THIÊN LONG với màu nâu */
+.custom-font {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; /* Tăng kích thước chữ để nổi bật */
+    color: #4e342e; /* Màu nâu sẫm để tạo sự trang trọng */
+    letter-spacing: 1px; /* Giãn cách chữ để tạo cảm giác thoáng và dễ đọc */
+    text-transform: uppercase; /* Chữ in hoa */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Thêm bóng mờ để nổi bật chữ */
+}
+
+/* Cải thiện phần mô tả */
+.lead {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #757575; /* Màu chữ xám nhẹ, dễ đọc */
+    text-align: justify; /* Căn đều văn bản */
+}
+
+/* Nhấn mạnh một số phần bằng chữ in đậm */
+strong {
+    color: #D4AF37; /* Màu vàng óng ánh để nhấn mạnh uy tín */
+    font-weight: bold;
+}
+
+/* Điều chỉnh cho các hình ảnh trong phần giới thiệu */
+.img-fluid {
+    transition: transform 0.3s ease; /* Thêm hiệu ứng khi hover */
+}
+
+.img-fluid:hover {
+    transform: scale(1.05); /* Khi hover, hình ảnh sẽ phóng to một chút */
+}
+
+/* Cải thiện phần section-title */
+.section-title h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.section-title p {
+    font-size: 1rem;
+    color: #7f8c8d;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Đảm bảo phần responsive */
+@media (max-width: 767px) {
+    .custom-font {
+        font-size: 2rem; /* Giảm kích thước chữ cho màn hình nhỏ */
+    }
+
+    .lead {
+        font-size: 1rem; /* Điều chỉnh lại kích thước chữ cho văn bản mô tả */
+    }
+}
+
+</style>
+{% endblock about %}

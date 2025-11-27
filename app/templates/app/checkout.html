@@ -1,0 +1,114 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content_checkout %}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="box-element p-4 shadow rounded bg-white" id="form-wrapper">
+            <form id="form" method="POST">
+                {% csrf_token %}
+                <div id="user-info">
+                    <div class="form-field mb-3">
+                        <input required class="form-control" type="text" name="name" placeholder="Tên..">
+                    </div>
+                    <div class="form-field mb-3">
+                        <input required class="form-control" type="tel" name="phone" placeholder="Số điện thoại..">
+                    </div>
+                </div>
+
+                <div id="shipping-info">
+                    <hr>
+                    <p class="fw-bold">Thông tin giao hàng:</p>
+                    <hr>
+                    <div class="form-field mb-3">
+                        <input class="form-control" type="text" name="address" placeholder="Địa chỉ..">
+                    </div>
+                    <div class="form-field mb-3">
+                        <input class="form-control" type="text" name="city" placeholder="Thành phố..">
+                    </div>
+                    <div class="form-field mb-3">
+                        <input class="form-control" type="text" name="state" placeholder="Xã/Phường..">
+                    </div>
+                    <div class="form-field mb-3">
+                        <input class="form-control" type="text" name="zipcode" placeholder="Mã ZIPcode..">
+                    </div>
+                    <div class="form-field mb-3">
+                        <input class="form-control" type="text" name="country" placeholder="Quốc Gia..">
+                    </div>
+                </div>
+
+                <hr>
+                <!-- Phương thức thanh toán -->
+                <div class="payment-method">
+                    <p class="fw-bold">Chọn phương thức thanh toán:</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="payment_method" id="payment-cash" value="cash" checked>
+                        <label class="form-check-label" for="payment-cash">
+                            Tiền mặt khi nhận hàng
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Nút tiếp tục -->
+                <div class="text-center mt-4">
+                    <input id="form-button" class="btn btn-lg continue-btn" type="submit" value="TIẾP TỤC">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="box-element p-4 shadow rounded bg-white">
+            <a class="btn btn-outline-dark btn-sm" href="{% url 'cart' %}">&#x2190; Quay lại giỏ hàng</a>
+            <hr>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold mb-0">🛒 Hóa đơn</h3>
+                <div class="text-end">
+                    <h6 class="mb-1">🧾 Số sản phẩm: <span class="fw-bold">{{ order.get_cart_items }}</span></h6>
+                    <h6 class="mb-0">💰 Tổng hóa đơn: <span class="fw-bold text-success">{{ order.get_cart_total |floatformat:0|intcomma}}₫</span></h6>
+                </div>
+            </div>
+            <hr>
+            <div class="list-group mb-4">
+                {% for item in items %}
+                <div class="list-group-item list-group-item-action d-flex align-items-center justify-content-between rounded shadow-sm mb-2">
+                    <div class="d-flex align-items-center" style="flex: 3;">
+                        <img src="{{ item.product.ImageURL }}" class="img-thumbnail me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                        <div>
+                            <h6 class="mb-1 fw-semibold">{{ item.product.name }}</h6>
+                            <small class="text-muted">Giá: {{ item.product.price|floatformat:0|intcomma}}₫</small>
+                        </div>
+                    </div>
+                    <div class="text-end" style="flex: 1;">
+                        <p class="mb-1"><strong>Số lượng:</strong> {{ item.quantity }}</p>
+                        <p class="mb-0"><strong>Tổng:</strong> {{item.get_total|floatformat:0|intcomma}}₫</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<br/><br/><br/>
+
+<style>
+    .continue-btn {
+        background: linear-gradient(135deg, #28a745, #218838); /* Gradient xanh lá */
+        color: white;
+        padding: 12px 30px;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 30px;
+        border: none;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .continue-btn:hover {
+        background: linear-gradient(135deg, #34d058, #28a745); /* Màu sáng hơn khi hover */
+        transform: scale(1.05); /* Hiệu ứng phóng to nhẹ */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+</style>
+{% endblock content_checkout %}

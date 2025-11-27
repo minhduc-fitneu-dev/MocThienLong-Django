@@ -1,0 +1,86 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block search %}
+
+<div class="container py-4">
+    <h4 class="text-center mb-4">Kết quả tìm kiếm cho: <span class="text-primary">"{{ searched }}"</span></h4>
+  
+  
+    <div class="row justify-content-center">
+      {% for product in keys %}
+        <div class="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-center mb-4">
+          <div class="card shadow-sm border-0 rounded-4" style="width: 100%; max-width: 320px;">
+            <img src="{{ product.image.url }}" class="card-img-top rounded-top-4" alt="{{ product.name }}">
+            <div class="card-body d-flex flex-column text-center">
+              <h5 class="card-title fw-semibold text-dark">{{ product.name }}</h5>
+              <p class="text-danger fw-bold fs-5 mb-3">{{ product.price|floatformat:0|intcomma}}₫</p>
+              <div class="mt-auto d-flex justify-content-between gap-2">
+                <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-primary btn-sm update-cart">🛒 Thêm vào giỏ</button>
+                <a href="{% url 'detail' %}?id={{product.id}}" class="btn btn-outline-success btn-sm">👁 Xem</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  
+
+<style>
+    .cart-badge-update {
+        animation: badge-blink 0.5s ease-out;
+      }
+      
+      @keyframes badge-blink {
+        0% {
+          background-color: red;
+          transform: scale(1.2);
+        }
+        50% {
+          background-color: #ffc107;
+          transform: scale(1);
+        }
+        100% {
+          background-color: red;
+          transform: scale(1.2);
+        }
+      }
+      
+</style>
+
+
+
+<!-- Đoạn mã JavaScript tìm kiếm -->
+<script>
+document.getElementById('search-input').addEventListener('input', function() {
+    const query = this.value;
+    if (query.length > 2) { // Chỉ thực hiện tìm kiếm khi nhập ít nhất 3 ký tự
+        fetch(`/search/?searched=${query}`, {
+            method: 'GET',
+        })
+        .then(response => response.json())
+        .then(data => {
+            const suggestions = document.getElementById('search-suggestions');
+            suggestions.innerHTML = ''; // Xóa các gợi ý cũ
+            if (data.keys.length > 0) {
+                suggestions.style.display = 'block';
+                data.keys.forEach(item => {
+                    const div = document.createElement('div');
+                    div.classList.add('list-group-item');
+                    div.textContent = item.name;
+                    suggestions.appendChild(div);
+                });
+            } else {
+                suggestions.style.display = 'none'; // Nếu không có kết quả, ẩn gợi ý
+            }
+        })
+        .catch(error => console.error('Error fetching search suggestions:', error));
+    } else {
+        document.getElementById('search-suggestions').style.display = 'none';
+    }
+});
+</script>
+
+{% endblock search %}

@@ -1,0 +1,121 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% load humanize %}
+{% block banner_slider %}
+
+<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4" aria-label="Slide 5"></button>
+    </div>
+
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="2000">
+        <img src="{% static 'app/images/banner/madao.jpg' %}" class="d-block w-100" alt="Sữa bột">
+        <div class="carousel-caption d-none d-md-block bg-overlay">
+          <h5>TRANH GỖ</h5>
+          <p> Tranh gỗ cao cấp – chạm khắc tinh xảo, mẫu mã đa dạng: Mã đáo thành công, Cha mẹ, Vinh quy bái tổ,… Treo đẹp – tặng sang.</p>
+        </div>
+      </div>
+      
+      
+      <div class="carousel-item" data-bs-interval="3000">
+        <img src="{% static 'app/images/banner/donghobanner.jpg' %}" class="d-block w-100" alt="Sữa bò">
+        <div class="carousel-caption d-none d-md-block bg-overlay">
+          <h5>ĐỒNG HỒ GỖ</h5>
+          <p>🕰️ Đồng hồ gỗ độc đáo – thiết kế mộc mạc, sang trọng. Vừa xem giờ, vừa decor không gian thêm ấn tượng.</p>
+        </div>
+      </div>
+
+      <div class="carousel-item" data-bs-interval="3000">
+        <img src="{% static 'app/images/banner/khaytrabanner.jpg' %}" class="d-block w-100" alt="Sữa dê">
+        <div class="carousel-caption d-none d-md-block bg-overlay">
+          <h5>KHAY TRÀ GỖ</h5>
+          <p>Khay gỗ decor – tinh tế, tiện dụng. Phù hợp đựng trà, bánh, trái cây hoặc làm quà tặng ý nghĩa.</p>
+        </div>
+      </div>
+
+      <div class="carousel-item" data-bs-interval="3000">
+        <img src="{% static 'app/images/banner/diabanner.jpg' %}" class="d-block w-100" alt="Sữa công thức">
+        <div class="carousel-caption d-none d-md-block bg-overlay">
+          <h5>ĐĨA GỖ</h5>
+          <p>Đĩa gỗ trang trí – đẹp mắt, thủ công tỉ mỉ. Dùng để đựng đồ hoặc decor kệ, bàn tiệc thêm nghệ thuật.</p>
+        </div>
+      </div>
+
+
+
+      <div class="carousel-item" data-bs-interval="3000">
+        <img src="{% static 'app/images/banner/tienichbanner.jpg' %}" class="d-block w-100" alt="Sữa công thức">
+        <div class="carousel-caption d-none d-md-block bg-overlay">
+          <h5>ĐỒ DÙNG TIỆN ÍCH</h5>
+          <p>Sản phẩm gỗ thông minh – nhỏ gọn, đa năng. Từ kệ, móc treo đến phụ kiện decor tiện lợi cho mọi nhà.</p>
+        </div>
+      </div>
+      
+
+    </div>
+
+
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<style>
+    .bg-overlay {
+      background-color:rgba(139, 69, 19, 0.8); /* Màu vàng gỗ với độ mờ nhẹ */
+      padding: 10px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+  
+    .carousel-caption h5 {
+      color: #ffffff ; /* Màu nâu đậm giúp chữ nổi bật */
+      font-weight: bold;
+    }
+  
+    .carousel-caption p {
+      color: #fdf6e3; /* Màu nâu sẫm để dễ đọc */
+    }
+  </style>
+
+  </div>
+{% endblock banner_slider %}
+
+{% block main_content %}
+<div class="container">
+<div class="row justify-content-center" > 
+  {% for product in products %}
+  <div class="col-lg-3 col-md-4 col-sm-6 d-flex justify-content-center mb-4 "> <!-- Căn giữa từng ô -->
+     <div class="card shadow-sm p-2" style="width: 100%; max-width: 400px;"> <!-- Giới hạn chiều rộng để căn giữa đẹp hơn -->
+        <img class="card-img-top product-img" src="{{ product.image.url }}" alt="Sản phẩm">
+        <div class="card-body text-center d-flex flex-column">
+           <h5 class="card-title"><strong>{{ product.name }}</strong></h5>
+           <h4 class="text-danger"><strong>{{ product.price|floatformat:0|intcomma }}₫</strong></h4>
+           <hr>
+           <div class="mt-auto d-flex justify-content-between">
+              <button type="button" data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">🛒 Thêm vào giỏ hàng</button>
+              <a class="btn btn-outline-success" href="{% url 'detail' %}?id={{product.id}}">👁️ Xem </a>
+           </div>
+        </div>
+     </div>
+  </div>
+  {% endfor %}
+</div>
+</div>
+
+
+
+<br/><br/>
+{% endblock main_content %}
+

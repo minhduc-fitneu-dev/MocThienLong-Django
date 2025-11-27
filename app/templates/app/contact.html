@@ -1,0 +1,165 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block contact %}
+<!-- Contact Section -->
+<div id="contact" class="contact-area section-padding" style="background: linear-gradient(135deg, #f5f5f5, #e9e1d3);">
+    <div class="container">
+        <!-- Section Title -->
+        <div class="section-title text-center">
+            <h1 class="text-nougat">LIÊN HỆ VỚI MỘC THIÊN LONG</h1>
+            <p class="lead text-muted">Dù là thắc mắc, góp ý hay chỉ đơn giản là lời chào, đội ngũ Mộc Thiên Long luôn sẵn sàng đồng hành và hỗ trợ bạn.</p>
+        </div>                    
+
+        <div class="row">
+            <!-- Contact Form -->
+            <div class="col-lg-7">
+                <div class="contact">
+                    <form class="form" name="enq" method="post" action="contact.php" onsubmit="return validation();">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input type="text" name="name" class="form-control" placeholder="Tên của bạn" required="required">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="email" name="mobile" class="form-control" placeholder="Số điện thoại" required="required">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input type="text" name="subject" class="form-control" placeholder="Chủ đề" required="required">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <textarea rows="6" name="message" class="form-control" placeholder="Câu hỏi của bạn" required="required"></textarea>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <button type="submit" value="Send message" name="submit" id="submitButton" class="btn btn-nougat btn-lg mt-3" title="Submit Your Message!">Gửi câu hỏi</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div><!--- END COL --> 
+             
+            <!-- Contact Information -->
+            <div class="col-lg-5">
+                <div class="single_address mb-4">
+                    <i class="fa fa-map-marker-alt fa-3x text-nougat"></i>
+                    <h4 class="mt-3 text-dark">ĐỊA CHỈ CƠ SỞ</h4>
+                    <p class="text-muted">CHUYÊN MỸ, PHÚ XUYÊN, HÀ NỘI</p>
+                </div>
+                <div class="single_address mb-4">
+                    <i class="fa fa-envelope fa-3x text-nougat"></i>
+                    <h4 class="mt-3 text-dark">EMAIL</h4>
+                    <p class="text-muted">MOCTHIENLONG@GMAIL.COM</p>
+                </div>
+                <div class="single_address mb-4">
+                    <i class="fa fa-phone fa-3x text-nougat"></i>
+                    <h4 class="mt-3 text-dark">GỌI CHO CHÚNG TÔI</h4>
+                    <p class="text-muted">(+84) 972892105</p>
+                </div>
+                <div class="single_address">
+                    <i class="fa fa-clock fa-3x text-nougat"></i>
+                    <h4 class="mt-3 text-dark">GIỜ LÀM VIỆC</h4>
+                    <p class="text-muted">THỨ HAI - THỨ BẢY: 08.00 - 20.00<br> CHỦ NHẬT: 12.00 - 19.00</p>
+                </div>					
+            </div><!--- END COL --> 
+        </div><!--- END ROW -->
+    </div><!--- END CONTAINER -->	
+</div><!--- END CONTACT SECTION -->
+
+<style>
+  /* Contact Section Background */
+  .contact-area {
+      background: #f5f5f5;
+      padding: 70px 0;
+      font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Title Styling */
+  .section-title h1 {
+      font-size: 40px;
+      font-weight: bold;
+      color: #4e342e; /* Màu nâu chủ đạo */
+      margin-bottom: 20px;
+      font-family: 'Playfair Display', serif;
+  }
+  
+  .section-title p {
+      font-size: 18px;
+      color: #555;
+  }
+  
+  /* Contact Form Styling */
+  .contact .form-control {
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      margin-bottom: 15px;
+      padding: 15px;
+      font-size: 16px;
+  }
+  
+  .contact .form-control:focus {
+      border-color: #4e342e;
+      box-shadow: 0 0 8px rgba(78, 52, 46, 0.5);
+  }
+  
+  .contact .btn-nougat {
+      background-color: #4e342e; /* Màu nâu */
+      border: none;
+      font-size: 18px;
+      padding: 12px 30px;
+      border-radius: 50px;
+      color: white;  /* Màu chữ là trắng */
+
+  }
+  
+  .contact .btn-nougat:hover {
+      background-color: #3e2723; /* Màu nâu đậm khi hover */
+  }
+  
+  /* Contact Information Styling */
+  .single_address {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .single_address i {
+      color: #4e342e; /* Màu nâu */
+  }
+  
+  .single_address h4 {
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 15px;
+  }
+  
+  .single_address p {
+      font-size: 16px;
+      color: #555;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+      .contact-area {
+          padding: 50px 0;
+      }
+  
+      .contact .col-lg-7, .contact .col-lg-5 {
+          padding-left: 15px;
+          padding-right: 15px;
+      }
+  
+      .contact .form-control {
+          font-size: 14px;
+          padding: 12px;
+      }
+  
+      .contact .btn-nougat {
+          padding: 10px 25px;
+          font-size: 16px;
+      }
+  }
+  
+</style>
+
+{% endblock contact %}

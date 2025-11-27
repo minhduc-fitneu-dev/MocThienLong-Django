@@ -1,0 +1,168 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% load humanize %}
+{% block detail %}
+<section class="product-detail py-5">
+  <div class="container">
+    <div class="row gx-5">
+      
+      <!-- Image Section -->
+      <aside class="col-lg-6">
+        <div class="border rounded-4 mb-3 d-flex justify-content-center">
+          <a data-fslightbox="mygalley" class="rounded-4" target="_blank" href="{{product.ImageURL}}">
+            <img class="product-image rounded-4" src="{{product.ImageURL}}" alt="{{product.name}}">
+          </a>
+        </div>
+      </aside>
+
+      <!-- Product Information Section -->
+      <main class="col-lg-6 ps-lg-3">
+        <h4 class="product-name text-dark">{{ product.name }}</h4>
+        
+        <div class="d-flex flex-row my-3">
+          <!-- Rating -->
+          <div class="text-warning mb-1 me-2">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <span class="ms-1">5.0</span>
+          </div>
+          
+        </div>
+
+        <!-- Price Section -->
+        <div class="product-price mb-3">
+          <span class="h5">{{ product.price|floatformat:0|intcomma }}₫</span>
+          <span class="text-muted">/ Sản phẩm</span>
+        </div>
+
+        <!-- Product Description -->
+        <p>{{ product.detail }}</p>
+
+        <div class="product-specifications">
+          <h5>Chi tiết sản phẩm</h5>
+          <div class="row">
+            <dt class="col-3">Kích thước: </dt>
+            <dd class="col-9">{{ product.size }}</dd>
+            <dt class="col-3">Chất liệu gỗ: </dt>
+            <dd class="col-9">{{ product.wood_material }}</dd>
+            <dt class="col-3">Phù hợp: </dt>
+            <dd class="col-9">{{ product.suitable_space }}</dd>
+          </div>
+        </div>
+
+        <!-- Quantity & Add to Cart -->
+        <!-- Quantity Controls -->
+
+
+        <!-- Buttons -->
+        
+        <button type="button" data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">
+          🛒 Thêm vào giỏ hàng
+      </button>     
+      </main>
+    </div>
+  </div>
+</section>
+<style>
+  /* General styling for product details */
+.product-detail {
+    font-family: 'Noto Serif', serif;
+    padding-top: 30px;
+}
+
+.product-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4e342e; /* Dark brown */
+    margin-bottom: 20px;
+}
+
+.product-price {
+    color: #8d6e63;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.product-specifications dt {
+    font-weight: 600;
+}
+
+.product-specifications dd {
+    margin-bottom: 10px;
+}
+
+.product-image {
+    max-width: 100%;
+    max-height: 500px;
+    margin: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.product-image:hover {
+    transform: scale(1.05);
+}
+
+.add-btn {
+    background-color: #ffc107;
+    color: #fff;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 50px;
+    transition: 0.3s ease-in-out;
+    display: inline-flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.add-btn:hover {
+    background-color: #ffca28;
+    transform: scale(1.05);
+}
+
+.icon-hover:hover {
+    color: #0d6efd;
+}
+
+/* Product specifications section */
+.product-specifications h5 {
+    font-size: 1.4rem;
+    color: #4e342e;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Input field adjustments */
+.input-group .form-control {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 10px;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+    .product-name {
+        font-size: 1.5rem;
+    }
+
+    .product-detail .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .add-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .product-price {
+        font-size: 1.4rem;
+    }
+}
+
+</style>
+
+{% endblock detail %}

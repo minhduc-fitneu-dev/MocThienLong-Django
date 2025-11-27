@@ -1,0 +1,77 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block cart_content %}
+<div class="row">
+	<div class="col-lg-12">
+		<div class="box-element p-4 shadow-sm bg-white rounded">
+
+			<a class="btn btn-outline-dark btn-sm" href="{% url 'home' %}">
+				&#x2190; Tiếp tục mua sắm
+			</a>
+
+			<hr>
+			{% if order.get_cart_items > 0 %}
+			<table class="table table-bordered text-center">
+				<thead class="thead-dark">
+					<tr>
+						<th><h5>Sản phẩm: <strong>{{order.get_cart_items}}</strong></h5></th>
+						<th><h5>Tổng hóa đơn: <strong>{{order.get_cart_total|floatformat:0|intcomma}}₫</strong></h5></th> 
+						<th>
+							<a class="btn btn-success btn-sm float-right" href="{% url 'checkout' %}">
+								Thanh toán
+							</a>
+						</th>
+					</tr>
+				</thead>
+			</table>
+			{% else %}
+			<p class="text-center">Giỏ hàng của bạn hiện đang trống.</p>
+			{% endif %}
+		</div>
+
+		<br>
+		{% if order.get_cart_items > 0 %}
+		<div class="box-element p-4 shadow-sm bg-white rounded">
+			<div class="cart-row d-flex align-items-center font-weight-bold text-center">
+				<div style="flex:2"></div>
+				<div style="flex:2">Sản phẩm</div>
+				<div style="flex:1">Giá</div>
+				<div style="flex:1">Số lượng</div>
+				<div style="flex:1">Tổng tiền</div>
+			</div>
+
+			<hr>
+            {% for item in items %}
+			<div class="cart-row d-flex align-items-center text-center">
+				<div style="flex:2">
+					<img class="row-image img-thumbnail" src="{{item.product.ImageURL}}" style="width: 80px; height: 80px; object-fit: cover;">
+				</div>
+				<div style="flex:2"><p class="m-0">{{item.product.name}}</p></div>
+				<div style="flex:1"><p class="m-0">{{ item.product.price|floatformat:0|intcomma }}₫</p></div> 
+				<div style="flex:1">
+                <p class="quantity m-0" id="quantity-{{ item.product.id }}">{{ item.quantity }}</p>
+					<div class="quantity d-flex justify-content-center">
+						<img 
+							src="{% static 'app/images/arrow-up.png' %}" 
+							data-product="{{ item.product.id }}" 
+							data-action="add" 
+							class="chg-quantity mx-1 update-cart" 
+							style="cursor:pointer; width: 16px;">
+					
+						<img 
+							src="{% static 'app/images/arrow-down.png' %}" 
+							data-product="{{ item.product.id }}" 
+							data-action="remove" 
+							class="chg-quantity mx-1 update-cart" 
+							style="cursor:pointer; width: 16px;">
+					</div>					
+				</div>
+				<div style="flex:1"><p class="m-0">{{ item.get_total|floatformat:0|intcomma }}₫</p></div>
+			</div> 
+            {% endfor %}
+		</div>
+		{% endif %}
+	</div>
+</div>
+{% endblock cart_content %}

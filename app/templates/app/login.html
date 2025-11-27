@@ -1,0 +1,139 @@
+{% extends "app/base.html" %}
+{% load static %}
+{% block login %}
+<section class="min-vh-100 d-flex align-items-center bg-light py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+          <div class="row g-0">
+            
+            <!-- Hình minh hoạ -->
+            <div class="col-lg-6 d-none d-lg-block">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                   alt="Login" class="img-fluid h-100 w-100 object-fit-cover">
+            </div>
+
+            <!-- Form -->
+            <div class="col-lg-6 bg-white">
+              <div class="card-body p-5">
+                <h2 class="fw-bold text-center text-primary mb-4">ĐĂNG NHẬP</h2>
+                <!-- THÔNG BÁO LỖI -->
+                {% if messages %}
+                <div class="mb-3">
+                  {% for message in messages %}
+                    <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+                      <span>{{ message }}</span>
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+                <form method="POST" class="needs-validation" novalidate>
+                  {% csrf_token %}
+                  <style>
+                            .alert-dismissible {
+                            position: relative;
+                            }
+
+                            .alert .close {
+                            padding-top: .60rem !important;  /* đẩy nút đóng xuống một chút để nằm giữa */
+                            }
+
+                            .alert {
+                            opacity: 1;
+                            transition: opacity 0.5s ease;
+                            }
+                            .alert.hide {
+                            opacity: 0;
+                            transition: opacity 0.5s ease;
+                            visibility: hidden; /* ẩn alert sau khi mờ để không chiếm không gian */
+                            }
+
+                  </style>
+
+                  <!--Thông báo tắt sau 3s-->
+                  <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                      // Tìm tất cả các alert trên trang (ví dụ chỉ có alert lỗi đăng nhập)
+                      var alerts = document.querySelectorAll('.alert');
+                      alerts.forEach(function(alert) {
+                        // Sau 3 giây, thêm class 'hide' để kích hoạt hiệu ứng fade out
+                        setTimeout(function() {
+                          alert.classList.add('hide');
+                        }, 3000);
+                        // Lắng nghe sự kiện chuyển tiếp CSS kết thúc để loại bỏ hẳn alert khỏi DOM
+                        alert.addEventListener('transitionend', function(event) {
+                          if (event.propertyName === 'opacity') {  // đảm bảo kết thúc hiệu ứng opacity
+                            alert.parentNode.removeChild(alert);   // xóa phần tử alert khỏi DOM
+                          }
+                        });
+                      });
+                    });
+                  </script>
+                  
+                  
+                  <!-- Username -->
+                  <div class="form-floating mb-4">
+                    <input type="text" name="username" id="id_username" class="form-control rounded-3" placeholder="Tên đăng nhập" required
+                    value="{{ prefill_username|default:'' }}">                    
+                    <label for="id_username">Tên đăng nhập</label>
+                  </div>
+
+                  <!-- Password -->
+                  <div class="form-floating mb-4 position-relative">
+                    <input type="password" name="password" id="id_password" class="form-control rounded-3" placeholder="Mật khẩu" required
+                    value="{{ prefill_password|default:'' }}">                  
+                      <label for="id_password">Mật khẩu</label>
+                    <button type="button" class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-3 border-0" onclick="togglePassword()">
+                      <i class="fas fa-eye" id="toggleIcon"></i>
+                    </button>
+                  </div>
+
+                  <!-- Button -->
+                  <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg rounded-3 shadow-sm">
+                      Đăng nhập
+                    </button>
+                  </div>
+
+                  <!-- Forgot password (optional) -->
+                  <div class="text-center small mb-3">
+                    <a href="#" class="text-muted text-decoration-none">Quên mật khẩu?</a>
+                  </div>
+
+                  <!-- Register link -->
+                  <p class="text-center small">
+                    Bạn chưa có tài khoản?
+                    <a href="{% url 'register' %}" class="fw-semibold text-primary text-decoration-none">Đăng ký ngay</a>
+                  </p>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Hiện mật khẩu-->
+<script>
+    function togglePassword() {
+      const passwordInput = document.getElementById('id_password');
+      const toggleIcon = document.getElementById('toggleIcon');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
+      } else {
+        passwordInput.type = 'password';
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
+      }
+    }
+  </script>
+
+{% endblock login %}
+

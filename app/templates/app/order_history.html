@@ -1,0 +1,56 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block order_history %}
+<!-- Container -->
+<div class="container py-5">
+    <h2 class="display-4 text-center mb-5" style="font-weight: 700;">Lịch sử đơn hàng của bạn</h2>
+
+    {% for order in orders %}
+    <div class="card shadow-sm mb-4 border-light">
+        <div class="card-header bg-success text-white">
+            <h5 class="card-title mb-0">Đơn hàng #{{ order.id }}</h5>
+            <p class="mb-0">Ngày đặt: {{ order.date_order|date:"d/m/Y" }}</p>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <!-- Tổng tiền -->
+                <div class="col-md-6 mb-3">
+                    <h6><strong>Tổng tiền:</strong></h6>
+                    <p class="text-success h4">{{ order.get_cart_total | floatformat:0 | intcomma }}₫</p>
+                </div>
+                <!-- Địa chỉ giao hàng -->
+                <div class="col-md-6 mb-3">
+                  <!--   <h6><strong>Địa chỉ giao hàng:</strong></h6>
+                    <p class="text-muted">{{ order.shippingaddress.address }}, {{ order.shippingadress.city }}, {{ order.shippingadress.stage }}</p>
+                </div>-->
+            </div>
+
+            <hr>
+            <h6>Sản phẩm trong đơn hàng:</h6>
+            <ul class="list-group">
+                {% for item in order.orderitem_set.all %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div class="d-flex">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-thumbnail me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                        <div>
+                            <strong>{{ item.product.name }}</strong><br>
+                            <small class="text-muted">Số lượng: {{ item.quantity }}</small>
+                        </div>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">{{ item.get_total | floatformat:0 | intcomma }}₫</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="card-footer text-center">
+            <a href="{% url 'order_confirmation' order.id %}" class="btn btn-success">Xem chi tiết đơn hàng</a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="alert alert-warning text-center">Bạn chưa có đơn hàng nào.</div>
+    {% endfor %}
+</div>
+{% endblock %}

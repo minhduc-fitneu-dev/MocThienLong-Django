@@ -1,0 +1,127 @@
+
+{% extends "app/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+            {% comment %} <form method="POST" action="">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" name="submit" value="Login">
+            </form> {% endcomment %}
+            {% block register %}
+                <section class="vh-100 bg-light d-flex align-items-center">
+                <div class="container">
+                    <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="card shadow-lg border-0 rounded-4">
+                        <div class="row g-0">
+                            <!-- Ảnh bên trái -->
+                            <div class="col-lg-6 d-none d-lg-block">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                                alt="Register" class="img-fluid rounded-start-4 h-100 object-fit-cover">
+                            </div>
+
+                            <!-- Form bên phải -->
+                            <div class="col-lg-6">
+                            <div class="card-body p-5">
+                                <h2 class="fw-bold text-center mb-4">ĐĂNG KÍ</h2>
+
+                                <form method="POST" class="needs-validation" novalidate>
+                                {% csrf_token %}
+
+                                <!-- Username -->
+                                <div class="form-floating mb-3">
+                                    {{ form.username|add_class:"form-control" }}
+                                    <label for="id_username">Tên đăng nhập: </label>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="form-floating mb-3">
+                                    {{ form.email|add_class:"form-control" }}
+                                    <label for="id_email">Email: </label>
+                                </div>
+
+                                <!-- First name -->
+                                <div class="form-floating mb-3">
+                                    {{ form.first_name|add_class:"form-control" }}
+                                    <label for="id_first_name">Họ: </label>
+                                </div>
+
+                                <!-- Last name -->
+                                <div class="form-floating mb-3">
+                                    {{ form.last_name|add_class:"form-control" }}
+                                    <label for="id_last_name">Tên: </label>
+                                </div>
+
+                                                <!-- Password1 -->
+                                <div class="form-floating mb-3 position-relative">
+                                    {{ form.password1|add_class:"form-control" }}
+                                    <label for="id_password1">Mật khẩu</label>
+                                    <span class="position-absolute top-50 end-0 translate-middle-y me-3" onclick="togglePassword('id_password1', 'eyeIcon1')" style="cursor: pointer;">
+                                    <i class="fa-solid fa-eye" id="eyeIcon1"></i>
+                                    </span>
+                                </div>
+
+                                <!-- Password2 -->
+                                <div class="form-floating mb-4 position-relative">
+                                    {{ form.password2|add_class:"form-control" }}
+                                    <label for="id_password2">Nhập lại mật khẩu</label>
+                                    <span class="position-absolute top-50 end-0 translate-middle-y me-3" onclick="togglePassword('id_password2', 'eyeIcon2')" style="cursor: pointer;">
+                                    <i class="fa-solid fa-eye" id="eyeIcon2"></i>
+                                    </span>
+                                </div>
+
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg shadow-sm">Đăng kí</button>
+                                </div>
+                                </form>
+
+                                <p class="text-center mt-4 mb-0 small">Bạn đã có tài khoản ?
+                                <a href="{% url 'login' %}" class="text-decoration-none fw-semibold text-primary">Đăng nhập</a>
+                                </p>
+                            </div>
+                            </div>
+
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </section>
+                <!-- Script hiện/ẩn mật khẩu -->
+<script>
+    function togglePassword(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
+    }
+  </script>
+                {% endblock register %}
+
+
+
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <script src="" async defer></script>
+    </body>
+</html>
